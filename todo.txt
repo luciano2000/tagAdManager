@@ -1,0 +1,3 @@
+[] alimentar o bloco de anuncio com uma "sessão".
+[] opções de segmentação.
+[] refresh a cada x segundos.
