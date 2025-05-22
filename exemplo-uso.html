@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Exemplo de Uso do Google AdManager Simplificado</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        header {
+            background-color: #f8f9fa;
+            padding: 20px 0;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .content {
+            display: flex;
+            flex-wrap: wrap;
+        }
+        
+        main {
+            flex: 1;
+            min-width: 0;
+            padding-right: 20px;
+        }
+        
+        aside {
+            width: 300px;
+        }
+        
+        .ad-container {
+            background-color: #f0f0f0;
+            border: 1px dashed #ccc;
+            margin: 20px 0;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        footer {
+            margin-top: 50px;
+            padding: 20px 0;
+            background-color: #f8f9fa;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .content {
+                flex-direction: column;
+            }
+            
+            main {
+                padding-right: 0;
+            }
+            
+            aside {
+                width: 100%;
+                margin-top: 30px;
+            }
+        }
+    </style>
+    
+    <!-- Inclusão do script do Google AdManager Simplificado -->
+    <script src="google-admanager.js"></script>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Exemplo de Uso do Google AdManager</h1>
+            
+            <!-- Banner de topo -->
+            <div class="ad-container">
+                <div class="pubad" data-pos="topo"></div>
+            </div>
+        </header>
+        
+        <div class="content">
+            <main>
+                <h2>Conteúdo Principal</h2>
+                <p>Este é um exemplo de como utilizar o script simplificado do Google AdManager em um site.</p>
+                <p>Os anúncios são configurados automaticamente com base na classe "pubad" e no atributo "data-pos".</p>
+                
+                <!-- Banner dentro do conteúdo -->
+                <div class="ad-container">
+                    <div class="pubad" data-pos="inread"></div>
+                </div>
+                
+                <p>O script detecta automaticamente todos os elementos com a classe "pubad" e configura os tamanhos de acordo com o atributo "data-pos".</p>
+                <p>Além disso, os anúncios são responsivos e se adaptam automaticamente à resolução da tela.</p>
+                
+                <!-- Outro banner dentro do conteúdo -->
+                <div class="ad-container">
+                    <div class="pubad" data-pos="inread"></div>
+                </div>
+            </main>
+            
+            <aside>
+                <h3>Barra Lateral</h3>
+                
+                <!-- Banner lateral -->
+                <div class="ad-container">
+                    <div class="pubad" data-pos="lateral"></div>
+                </div>
+            </aside>
+        </div>
+        
+        <footer>
+            <p>&copy; 2025 - Exemplo de Uso do Google AdManager</p>
+            
+            <!-- Banner de rodapé -->
+            <div class="ad-container">
+                <div class="pubad" data-pos="rodape"></div>
+            </div>
+        </footer>
+    </div>
+    
+    <!-- Inicialização do Google AdManager -->
+    <script>
+        // Configuração do Google AdManager
+        GoogleAdManager.init({
+            networkCode: '1013246', // Substitua pelo seu código de rede
+            adUnitPath: '/acontece/teste', // Substitua pelo caminho da sua unidade de anúncio
+            collapseEmptyDivs: true,
+            enableSingleRequest: true
+        });
+        
+        // Exemplo de como adicionar uma nova posição personalizada
+        GoogleAdManager.addPosition('personalizado', [
+            { viewport: [0, 0], sizes: [{ width: 300, height: 250 }] },
+            { viewport: [768, 0], sizes: [{ width: 336, height: 280 }] },
+            { viewport: [1024, 0], sizes: [{ width: 728, height: 90 }] }
+        ]);
+    </script>
+</body>
+</html>
