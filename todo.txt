@@ -1,3 +1,4 @@
 [] alimentar o bloco de anuncio com uma "sessão".
 [] opções de segmentação.
+[] adicionar mais posicoes / formato
 [] refresh a cada x segundos.
