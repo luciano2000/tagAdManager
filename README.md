@@ -1,104 +1,158 @@
-# Documentação da Aplicação Google AdManager
+# Documentação do Google AdManager Simplificado
 
 ## Visão Geral
 
-Esta aplicação web foi desenvolvida para otimizar o uso do Google AdManager por publishers e sites de notícias. A solução implementa uma integração eficiente com a API do Google AdManager, permitindo a configuração dinâmica de banners publicitários que se adaptam automaticamente a diferentes resoluções de tela.
+Este script simplificado do Google AdManager foi desenvolvido para facilitar a integração de anúncios em sites de notícias e publishers. Ele permite a configuração dinâmica de banners publicitários que se adaptam automaticamente a diferentes resoluções de tela, com uma implementação simples via tag script ou Google Tag Manager.
 
 ## Características Principais
 
-- **Detecção Automática de Espaços Publicitários**: A aplicação identifica automaticamente todas as divs com a classe `pubad` no DOM.
-- **Configuração Dinâmica via Atributos de Dados**: O tamanho e comportamento dos banners são definidos pelo atributo `data-pos`.
-- **Responsividade Completa**: Os banners se adaptam automaticamente a diferentes tamanhos de tela.
-- **Carregamento Assíncrono**: O script do Google AdManager é carregado de forma assíncrona para não bloquear o carregamento da página.
-- **Atualização Dinâmica**: Os anúncios são atualizados automaticamente quando a janela é redimensionada.
-- **Observação de Mudanças no DOM**: Novos espaços de anúncios adicionados dinamicamente são detectados e configurados automaticamente.
+- **Arquivo Único**: Toda a funcionalidade está contida em um único arquivo JavaScript.
+- **Fácil Implementação**: Basta incluir o script e inicializar com uma configuração básica.
+- **Detecção Automática**: Identifica automaticamente elementos com a classe `pubad`.
+- **Configuração via Atributos**: Define tamanhos e comportamentos via atributo `data-pos`.
+- **Responsividade**: Adapta os anúncios automaticamente a diferentes tamanhos de tela.
+- **Carregamento Assíncrono**: Carrega o script do Google AdManager de forma não-bloqueante.
+- **Compatibilidade com GTM**: Pode ser facilmente implementado via Google Tag Manager.
 
-## Como Usar
+## Como Implementar
 
-### 1. Configuração Básica
+### 1. Via Tag Script Direta
 
-Para utilizar a aplicação, você precisa envolver sua aplicação com o componente `AdManagerProvider` e definir os parâmetros de rede:
-
-```jsx
-import { AdManagerProvider } from './components/AdComponents';
-
-function App() {
-  return (
-    <AdManagerProvider 
-      networkCode="123456789" // Seu código de rede do Google AdManager
-      adUnitPath="/seu-site/secao" // Caminho da unidade de anúncio
-    >
-      {/* Conteúdo da sua aplicação */}
-    </AdManagerProvider>
-  );
-}
-```
-
-### 2. Inserção de Anúncios
-
-Para inserir um espaço de anúncio em qualquer lugar da sua aplicação, use o componente `AdContainer`:
-
-```jsx
-import { AdContainer } from './components/AdComponents';
-
-function MinhaSecao() {
-  return (
-    <div>
-      <h2>Título da Seção</h2>
-      <p>Conteúdo da seção...</p>
-      
-      {/* Inserir um anúncio */}
-      <AdContainer position="topo" />
-      
-      <p>Mais conteúdo...</p>
-    </div>
-  );
-}
-```
-
-Alternativamente, você pode criar manualmente divs com a classe `pubad` e o atributo `data-pos`:
+Adicione o script ao cabeçalho da sua página:
 
 ```html
-<div class="pubad" data-pos="lateral"></div>
+<head>
+    <!-- Outros elementos do cabeçalho -->
+    <script src="caminho/para/google-admanager.js"></script>
+</head>
 ```
 
-### 3. Posições Disponíveis
+No final da página, antes do fechamento da tag `</body>`, inicialize o script:
 
-A aplicação vem pré-configurada com as seguintes posições:
+```html
+<script>
+    GoogleAdManager.init({
+        networkCode: '1234567', // Seu código de rede
+        adUnitPath: '/rede/site', // Caminho da unidade de anúncio
+        collapseEmptyDivs: true,
+        enableSingleRequest: true
+    });
+</script>
+</body>
+```
 
-- **topo**: Banners no topo da página (320x50, 320x100, 728x90, 970x90, 970x250)
-- **lateral**: Banners laterais (300x250, 300x600)
-- **rodape**: Banners no rodapé (320x50, 728x90)
-- **inread**: Banners dentro do conteúdo (300x250, 640x360)
-- **default**: Posição padrão para qualquer outro caso (300x250)
+### 2. Via Google Tag Manager
 
-### 4. Personalização
+1. Faça upload do arquivo `google-admanager.js` para seu servidor.
+2. No Google Tag Manager, crie uma nova tag HTML personalizada.
+3. Adicione o seguinte código à tag:
 
-Você pode personalizar as configurações de tamanho e posição editando o arquivo `adManager.ts` na pasta `src/lib/`. As configurações de rede também podem ser ajustadas neste arquivo.
+```html
+<script src="https://seu-servidor.com/caminho/para/google-admanager.js"></script>
+<script>
+    GoogleAdManager.init({
+        networkCode: '1234567', // Seu código de rede
+        adUnitPath: '/rede/site', // Caminho da unidade de anúncio
+        collapseEmptyDivs: true,
+        enableSingleRequest: true
+    });
+</script>
+```
 
-## Estrutura do Projeto
+4. Configure a tag para disparar na visualização de página (Page View).
 
-- **src/lib/adManager.ts**: Classe principal que gerencia a integração com o Google AdManager.
-- **src/components/AdComponents.tsx**: Componentes React para facilitar a inserção de anúncios.
-- **src/App.tsx**: Exemplo de implementação da aplicação.
-- **src/App.css**: Estilos para a aplicação de demonstração.
+## Inserindo Anúncios na Página
 
-## Requisitos Técnicos
+Para inserir um espaço de anúncio, adicione um elemento com a classe `pubad` e o atributo `data-pos`:
 
-- React 18+
-- TypeScript 4.9+
-- Navegadores modernos com suporte a ES6
+```html
+<div class="pubad" data-pos="topo"></div>
+```
 
-## Otimizações Implementadas
+O atributo `data-pos` define o tipo/posição do anúncio, que determina os tamanhos disponíveis para diferentes resoluções.
 
-1. **Carregamento Assíncrono**: O script do GPT é carregado de forma assíncrona para não bloquear o carregamento da página.
-2. **Single Request Architecture (SRA)**: Todos os anúncios são solicitados em uma única requisição para melhorar a performance.
-3. **Lazy Loading**: Os anúncios são carregados apenas quando necessário.
-4. **Responsive Design**: Os tamanhos dos anúncios se adaptam automaticamente à resolução da tela.
-5. **Collapse Empty Divs**: Espaços vazios são colapsados automaticamente quando não há anúncios disponíveis.
+## Posições Pré-configuradas
+
+O script vem com as seguintes posições pré-configuradas:
+
+| Posição | Descrição | Tamanhos por Resolução |
+|---------|-----------|------------------------|
+| `topo` | Banners no topo da página | Mobile: 320x50, 320x100<br>Tablet: 728x90<br>Desktop: 970x90, 970x250 |
+| `lateral` | Banners laterais | Mobile: Nenhum<br>Desktop: 300x250, 300x600 |
+| `rodape` | Banners no rodapé | Mobile: 320x50<br>Tablet/Desktop: 728x90 |
+| `inread` | Banners dentro do conteúdo | Mobile: 300x250<br>Tablet/Desktop: 640x360 |
+| `default` | Posição padrão | Todos: 300x250 |
+
+## Parâmetros de Configuração
+
+### Parâmetros do método `init()`
+
+| Parâmetro | Tipo | Padrão | Descrição |
+|-----------|------|--------|-----------|
+| `networkCode` | string | '1234567' | Código da rede do Google AdManager |
+| `adUnitPath` | string | '/rede/site' | Caminho da unidade de anúncio |
+| `collapseEmptyDivs` | boolean | true | Colapsar divs vazias quando não há anúncios |
+| `enableSingleRequest` | boolean | true | Habilitar requisição única para todos os anúncios |
+| `disableInitialLoad` | boolean | false | Desabilitar carregamento inicial dos anúncios |
+
+## API Pública
+
+O script expõe um objeto global `GoogleAdManager` com os seguintes métodos:
+
+### `GoogleAdManager.init(config)`
+
+Inicializa o AdManager com a configuração fornecida.
+
+```javascript
+GoogleAdManager.init({
+    networkCode: '1234567',
+    adUnitPath: '/rede/site'
+});
+```
+
+### `GoogleAdManager.refresh()`
+
+Atualiza manualmente todos os anúncios na página.
+
+```javascript
+GoogleAdManager.refresh();
+```
+
+### `GoogleAdManager.addPosition(position, mapping)`
+
+Adiciona uma nova posição com mapeamento de tamanhos personalizado.
+
+```javascript
+GoogleAdManager.addPosition('personalizado', [
+    { viewport: [0, 0], sizes: [{ width: 300, height: 250 }] },
+    { viewport: [768, 0], sizes: [{ width: 336, height: 280 }] },
+    { viewport: [1024, 0], sizes: [{ width: 728, height: 90 }] }
+]);
+```
+
+### `GoogleAdManager.setPositionSizeMapping(position, mapping)`
+
+Modifica o mapeamento de tamanhos de uma posição existente.
+
+```javascript
+GoogleAdManager.setPositionSizeMapping('topo', [
+    { viewport: [0, 0], sizes: [{ width: 320, height: 100 }] },
+    { viewport: [768, 0], sizes: [{ width: 728, height: 90 }] }
+]);
+```
+
+## Exemplo Completo
+
+Veja o arquivo `exemplo-uso.html` para um exemplo completo de implementação.
 
 ## Considerações de Performance
 
-- A aplicação utiliza debounce no evento de redimensionamento para evitar múltiplas atualizações durante o redimensionamento da janela.
-- O MutationObserver é utilizado para detectar novos espaços de anúncios sem a necessidade de polling.
-- A detecção de tamanho de viewport é otimizada para minimizar recálculos.
+- O script utiliza carregamento assíncrono para não bloquear o carregamento da página.
+- Implementa debounce no evento de redimensionamento para evitar múltiplas atualizações.
+- Utiliza Single Request Architecture (SRA) para melhorar a performance.
+- Detecta automaticamente novos elementos adicionados ao DOM.
+
+## Compatibilidade
+
+- Navegadores modernos com suporte a ES6
+- Internet Explorer 11 não é suportado
