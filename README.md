@@ -78,10 +78,14 @@ O script vem com as seguintes posições pré-configuradas:
 | Posição | Descrição | Tamanhos por Resolução |
 |---------|-----------|------------------------|
 | `topo` | Banners no topo da página | Mobile: 320x50, 320x100<br>Tablet: 728x90<br>Desktop: 970x90, 970x250 |
-| `lateral` | Banners laterais | Mobile: Nenhum<br>Desktop: 300x250, 300x600 |
+| `lateral` | Banners laterais | Mobile: Nenhum<br>Desktop: 300x250 |
+| `barra` | Banners laterais | Mobile: Nenhum<br>Desktop:  300x600 |
+| `meio` | Banners no meio da página | Mobile: 320x50, 320x100<br>Tablet: 728x90<br>Desktop: 970x90, 970x250 |
 | `rodape` | Banners no rodapé | Mobile: 320x50<br>Tablet/Desktop: 728x90 |
-| `inread` | Banners dentro do conteúdo | Mobile: 300x250<br>Tablet/Desktop: 640x360 |
+| `inread` | Banners dentro do conteúdo | Mobile: 300x250<br>Tablet/Desktop: 300z250 |
 | `default` | Posição padrão | Todos: 300x250 |
+
+Pode-se adicionar mais posições, seguindo a lógica de nomes e mapeamentos no script.
 
 ## Parâmetros de Configuração
 
@@ -94,6 +98,7 @@ O script vem com as seguintes posições pré-configuradas:
 | `collapseEmptyDivs` | boolean | true | Colapsar divs vazias quando não há anúncios |
 | `enableSingleRequest` | boolean | true | Habilitar requisição única para todos os anúncios |
 | `disableInitialLoad` | boolean | false | Desabilitar carregamento inicial dos anúncios |
+| `enableLazyLoad` | boolean | true | Habilita Carregamento Preguiçoso (Melhora Viewability) |
 
 ## API Pública
 
